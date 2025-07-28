@@ -55,27 +55,27 @@ const makeNewAIResponseForMessages = (prompt, chatbotRoomId, messageId) => __awa
             prompt = '';
         // if(detectPromptType(content) === 'summary' ){
         //   console.log(prompt,detectPromptType(content));
-        //    response = await axios.post("http://localhost:3000/api/ai/summarize", {
+        //    response = await axios.post("http://192.168.1.12:3000/api/ai/summarize", {
         //   prompt,
         // });
         // }else if(detectPromptType(content) === 'explanation' ){
         //   console.log(prompt,detectPromptType(content));
-        //    response = await axios.post("http://localhost:3000/api/ai/explain", {
+        //    response = await axios.post("http://192.168.1.12:3000/api/ai/explain", {
         //   prompt,
         // });
         // }else if(detectPromptType(content) === 'flashcards' ){
         //   console.log(prompt,detectPromptType(content));
-        //    response = await axios.post("http://localhost:3000/api/ai/flashcards", {
+        //    response = await axios.post("http://192.168.1.12:3000/api/ai/flashcards", {
         //   prompt,
         // });
         // }else if(detectPromptType(content) === 'questions' ){
         //   console.log(prompt,detectPromptType(content));
-        //    response = await axios.post("http://localhost:3000/api/ai/questions", {
+        //    response = await axios.post("http://192.168.1.12:3000/api/ai/questions", {
         //   prompt,
         // });
         // }else if(detectPromptType(content) === 'general' ){
         //   console.log(prompt,detectPromptType(content));
-        const response = yield axios_1.default.post("http://localhost:3000/api/ai", {
+        const response = yield axios_1.default.post("http://192.168.1.12:2050/api/ai", {
             prompt,
         });
         if (!response)
@@ -114,14 +114,13 @@ const makeNewAIResponseForDocumentsWithMessage = (uploadedFilePath, prompt, chat
         const form = new form_data_1.default();
         form.append("file", fs_1.default.createReadStream(uploadedFilePath));
         form.append('prompt', prompt);
-        const response = yield axios_1.default.post("http://localhost:3000/api/ai/answer-file", form, {
+        const response = yield axios_1.default.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
             headers: form.getHeaders(),
         });
         if (!response)
             return null;
         console.log(response.data);
-        const original = yield response.data.original;
-        const augmented = yield response.data.augmented;
+        const augmented = yield response.data;
         const aiResponse = {
             id: crypto_1.default.randomUUID(),
             chatbot_rooms_id: chatbotRoomId,
@@ -136,7 +135,7 @@ const makeNewAIResponseForDocumentsWithMessage = (uploadedFilePath, prompt, chat
         if (responseData === null) {
             throw new Error("AI response is null");
         }
-        return { original, augmented };
+        return augmented;
     }
     catch (error) {
         console.error("Error generating AI response:", error);
@@ -151,7 +150,7 @@ const makeNewAIResponseForDocumentsWithoutMessage = (uploadedFilePath, prompt, c
         }
         const form = new form_data_1.default();
         form.append("file", fs_1.default.createReadStream(uploadedFilePath));
-        const response = yield axios_1.default.post("http://localhost:3000/api/ai/upload-file", form, {
+        const response = yield axios_1.default.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
             headers: form.getHeaders(),
         });
         if (!response)

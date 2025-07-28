@@ -6,6 +6,9 @@ import mockAIRouter from "./mock";
 import helmet from "helmet";
 import cors from "cors";
 import hpp from "hpp";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 
 const app = express();
@@ -30,6 +33,6 @@ app.use('/api/scan', scanRouter);
 
 app.use("/api/ai", mockAIRouter); // خلي الباك يسمع للـ fake AI
 
-app.listen(port, host, () => {
-  console.log(`Server running at http://${host}:${port}`);
+app.listen(port, "192.168.1.25", () => {
+  console.log(`Server running at http://192.168.1.25:${port}`);
 });

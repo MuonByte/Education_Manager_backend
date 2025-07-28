@@ -53,28 +53,28 @@ export const makeNewAIResponseForMessages = async(prompt: string, chatbotRoomId:
 
     // if(detectPromptType(content) === 'summary' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://localhost:3000/api/ai/summarize", {
+    //    response = await axios.post("http://192.168.1.12:3000/api/ai/summarize", {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'explanation' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://localhost:3000/api/ai/explain", {
+    //    response = await axios.post("http://192.168.1.12:3000/api/ai/explain", {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'flashcards' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://localhost:3000/api/ai/flashcards", {
+    //    response = await axios.post("http://192.168.1.12:3000/api/ai/flashcards", {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'questions' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://localhost:3000/api/ai/questions", {
+    //    response = await axios.post("http://192.168.1.12:3000/api/ai/questions", {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'general' ){
     //   console.log(prompt,detectPromptType(content));
 
-    const response = await axios.post("http://localhost:3000/api/ai", {
+    const response = await axios.post("http://192.168.1.12:2050/api/ai", {
       prompt,
     });
     
@@ -128,7 +128,7 @@ export const makeNewAIResponseForDocumentsWithMessage = async(uploadedFilePath: 
     
     form.append('prompt', prompt);
     
-    const response = await axios.post("http://localhost:3000/api/ai/answer-file", form, {
+    const response = await axios.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
       headers: form.getHeaders(),
     });
 
@@ -168,6 +168,7 @@ export const makeNewAIResponseForDocumentsWithMessage = async(uploadedFilePath: 
   }
 
 }
+
 export const makeNewAIResponseForDocumentsWithoutMessage = async(uploadedFilePath: string , prompt: string, chatbotRoomId: string)=> {
   try {
 
@@ -180,7 +181,7 @@ export const makeNewAIResponseForDocumentsWithoutMessage = async(uploadedFilePat
     form.append("file", fs.createReadStream(uploadedFilePath));
 
 
-       const response = await axios.post("http://localhost:3000/api/ai/upload-file", form, {
+       const response = await axios.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
         headers: form.getHeaders(),
       });
 

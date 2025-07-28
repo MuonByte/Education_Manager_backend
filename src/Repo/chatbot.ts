@@ -6,8 +6,9 @@ import DatabaseConnection from "../config/db";
 
 export class ChatbotRoomRepo{
   static getChatbotRooms():Promise<ChatbotRoom[]|undefined> {
-        return new Promise((resolve, reject) => {
-          DatabaseConnection.connection.query("SELECT * FROM chatbot_rooms", (error, results: ChatbotRoom[]) => {
+    console.log("DB_USER", process.env.DB_USER);
+    return new Promise((resolve, reject) => {
+      DatabaseConnection.connection.query("SELECT * FROM chatbot_rooms", (error, results: ChatbotRoom[]) => {
             if (error) {
               resolve(undefined);
             } else {
@@ -15,9 +16,10 @@ export class ChatbotRoomRepo{
             }
           })
         })
-  }
-  static findChatbotRoom(id: string):Promise<ChatbotRoom|undefined> {
-    return new Promise((resolve, reject) => {
+      }
+      static findChatbotRoom(id: string):Promise<ChatbotRoom|undefined> {
+        return new Promise((resolve, reject) => {
+      console.log("DB_USER", process.env.DB_USER);
       DatabaseConnection.connection.query("SELECT * FROM chatbot_rooms WHERE id = ?", [id], (error, results: ChatbotRoom[]) => {
         if (error) {
           resolve(undefined);
@@ -29,6 +31,7 @@ export class ChatbotRoomRepo{
   }
   static renameChatbotRoom(id: string, title: string):Promise<boolean|undefined> {
     return new Promise((resolve, reject) => {
+      console.log("DB_USER", process.env.DB_USER);
       DatabaseConnection.connection.execute("UPDATE chatbot_rooms SET title = ? WHERE id = ?", [title, id], (error, results: ChatbotRoom[]) => {
         if (error) {
           resolve(undefined);
@@ -42,8 +45,8 @@ export class ChatbotRoomRepo{
   // static getTimestamp(id: string):Promise<Date|undefined> {
   //   return new Promise((resolve, reject) => {
   //     DatabaseConnection.connection.query<RowDataPacket[]>(
-  //   "SELECT created_at FROM chatbot_rooms WHERE id = ?",
-  //   [id],
+    //   "SELECT created_at FROM chatbot_rooms WHERE id = ?",
+    //   [id],
   //   (error, results) => {
   //     if (error) {
   //       resolve(undefined);
@@ -58,6 +61,7 @@ export class ChatbotRoomRepo{
   // }
   static sortTimestamp ():Promise<ChatbotRoom[]|undefined> {
     return new Promise((resolve, reject) => {
+      console.log("DB_USER", process.env.DB_USER);
       DatabaseConnection.connection.query("SELECT * FROM chatbot_rooms ORDER BY created_at ASC", (error, results: ChatbotRoom[]) => {
         if (error) {
           resolve(undefined);
@@ -70,6 +74,7 @@ export class ChatbotRoomRepo{
   
   static createNewRoom(room: ChatbotRoom):Promise<Boolean|undefined> {
     return new Promise((resolve, reject) => {
+      console.log("DB_USER", process.env.DB_USER);
       DatabaseConnection.connection.execute("INSERT INTO chatbot_rooms (id,title) VALUES (?,?)", [room.id,room.title], (error) => {
         if (error) {
           console.log("error",error);
@@ -84,11 +89,12 @@ export class ChatbotRoomRepo{
   
   static getAllRoomsForUser(users_id: string):Promise<ChatbotRoom[]|undefined> {
     return new Promise((resolve, reject) => {
+      console.log("DB_USER", process.env.DB_USER);
       DatabaseConnection.connection.query(`SELECT DISTINCT cr.* FROM chatbot_rooms cr JOIN message m ON cr.id = m.chatbot_rooms_id WHERE m.sender = 'USER' AND m.users_id = ?;` , [users_id], (error, results: ChatbotRoom[]) => {
         if (error) {
           resolve(undefined);
         } else {
-        resolve(results);
+          resolve(results);
       }
     })
   })

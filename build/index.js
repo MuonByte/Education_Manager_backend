@@ -11,6 +11,8 @@ const mock_1 = __importDefault(require("./mock"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
 const hpp_1 = __importDefault(require("hpp"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app = (0, express_1.default)();
 const host = "localhost";
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -25,6 +27,6 @@ app.use("/api/message", message_1.default);
 app.use(scan_1.default);
 app.use('/api/scan', scan_1.default);
 app.use("/api/ai", mock_1.default); // خلي الباك يسمع للـ fake AI
-app.listen(port, host, () => {
-    console.log(`Server running at http://${host}:${port}`);
+app.listen(port, "192.168.1.25", () => {
+    console.log(`Server running at http://192.168.1.25:${port}`);
 });

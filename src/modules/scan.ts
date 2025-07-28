@@ -15,8 +15,8 @@ export async function uploadAndResponse_Handler(req: Request, res: Response) {
 
 
 
-  const userId = (req as any).userId;
-  const chatbotId = (req as any).chatbotId;
+  const userId = "(req as any).userId";
+  const chatbotId = "3f159c19-9ca1-4b18-a316-5fc8212843b4";
 
   
 
