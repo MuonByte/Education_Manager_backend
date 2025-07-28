@@ -1,3 +1,6 @@
-env
+.env
 .git
 node_modules
+src
+nodemon.json
+tsconfig.json
