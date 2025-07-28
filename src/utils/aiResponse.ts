@@ -47,49 +47,45 @@ import FormData from "form-data";
 export const makeNewAIResponseForMessages = async(prompt: string, chatbotRoomId: string, messageId?: string)=> {
   try {
     if(prompt===undefined) prompt='';
-
-
-
-
     // if(detectPromptType(content) === 'summary' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://192.168.1.12:3000/api/ai/summarize", {
+    //    response = await axios.post(`http://${process.env.AI_IP}:3000/api/ai/summarize`, {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'explanation' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://192.168.1.12:3000/api/ai/explain", {
+    //    response = await axios.post(`http://${process.env.AI_IP}:3000/api/ai/explain`, {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'flashcards' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://192.168.1.12:3000/api/ai/flashcards", {
+    //    response = await axios.post(`http://${process.env.AI_IP}:3000/api/ai/flashcards`, {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'questions' ){
     //   console.log(prompt,detectPromptType(content));
-    //    response = await axios.post("http://192.168.1.12:3000/api/ai/questions", {
+    //    response = await axios.post(`http://${process.env.AI_IP}:3000/api/ai/questions`, {
     //   prompt,
     // });
     // }else if(detectPromptType(content) === 'general' ){
     //   console.log(prompt,detectPromptType(content));
-
-    const response = await axios.post("http://192.168.1.12:2050/api/ai", {
+    
+    console.log("prompt : ",prompt);
+    const response = await axios.post(`http://${process.env.AI_IP}:${process.env.AI_PORT}/api/ai`, {
       prompt,
     });
     
-
+    console.log("prompt : ",prompt);
     if(!response) return null;
-
-    const data = await response.data;
-      console.log(data);
+    
+    const data = await response.data.answer;
+    console.log(data);
 
     const aiResponse: AIResponse = {
       id: crypto.randomUUID(),
       chatbot_rooms_id: chatbotRoomId,
       prompt: prompt ,
-      response: data.response, 
-      // topic: data.topic,
+      response: data, 
       message_id: messageId,
       created_at: new Date(),
       constructor: { name: "RowDataPacket" },
@@ -115,35 +111,52 @@ export const makeNewAIResponseForMessages = async(prompt: string, chatbotRoomId:
   }
 
 }
+
+
+
 export const makeNewAIResponseForDocumentsWithMessage = async(uploadedFilePath: string , prompt: string, chatbotRoomId: string, messageId?: string)=> {
   try {
-
+    prompt = prompt.toString();
     if (!fs.existsSync(uploadedFilePath)) {
       throw new Error("Uploaded file not found");
     }
   
     const form = new FormData();
     form.append("file", fs.createReadStream(uploadedFilePath));
-
-    
-    form.append('prompt', prompt);
-    
-    const response = await axios.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
+    console.log("berfore upload file");
+    const documentsResponse = await axios.post(`http://${process.env.AI_IP}:${process.env.AI_PORT}/api/ai/upload-file`, form, {
       headers: form.getHeaders(),
     });
+    console.log("after upload file");
+
+    const response = await axios.post(`http://${process.env.AI_IP}:${process.env.AI_PORT}/api/ai`, {
+      prompt,
+    });
+    console.log("after ai");
 
     if(!response) return null;
 
     console.log(response.data);
 
-    const original = await response.data.original;
-    const augmented = await response.data.augmented;
+    const original = await documentsResponse.data.original;
+    const augmented = await documentsResponse.data.augmented;
+    const answer = await response.data.answer;
+
+    const promptString = `
+      
+      ${augmented.headings.join('\n')}
+      
+      ${augmented.bullets.join('\n')}
+
+      ${augmented.other_text.join('\n')}
+
+      `.trim();
 
     const aiResponse: AIResponse = {
       id: crypto.randomUUID(),
       chatbot_rooms_id: chatbotRoomId,
       prompt: prompt,
-      response: augmented, 
+      response: answer, 
       message_id: messageId,
       created_at: new Date(),
       constructor: { name: "RowDataPacket" },
@@ -158,7 +171,7 @@ export const makeNewAIResponseForDocumentsWithMessage = async(uploadedFilePath: 
       throw new Error("AI response is null");
     }    
 
-    return {original,augmented};
+    return {original,promptString};
 
   } catch (error) {    
 
@@ -181,7 +194,7 @@ export const makeNewAIResponseForDocumentsWithoutMessage = async(uploadedFilePat
     form.append("file", fs.createReadStream(uploadedFilePath));
 
 
-       const response = await axios.post("http://192.168.1.12:2050/api/ai/upload-file", form, {
+       const response = await axios.post(`http://${process.env.AI_IP}:${process.env.AI_PORT}/api/ai/upload-file`,form, {
         headers: form.getHeaders(),
       });
 
@@ -190,13 +203,23 @@ export const makeNewAIResponseForDocumentsWithoutMessage = async(uploadedFilePat
     const original = await response.data.original;
     const augmented = await response.data.augmented;
 
+    const promptString = `
+      
+      ${augmented.headings.join('\n')}
+      
+      ${augmented.bullets.join('\n')}
+
+      ${augmented.other_text.join('\n')}
+
+      `.trim();
+
 
     const aiResponse: AIResponse = {
       id: crypto.randomUUID(),
       chatbot_rooms_id: chatbotRoomId,
       prompt: prompt,
-      response: augmented, 
-      // message_id: messageId,
+      response: promptString, 
+
       created_at: new Date(),
       constructor: { name: "RowDataPacket" },
     };
@@ -210,7 +233,7 @@ export const makeNewAIResponseForDocumentsWithoutMessage = async(uploadedFilePat
       throw new Error("AI response is null");
     }    
 
-    return {original,augmented};
+    return {original,promptString};
 
   } catch (error) {    
 

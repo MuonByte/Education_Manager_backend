@@ -20,8 +20,8 @@ function uploadAndResponse_Handler(req, res) {
             return res.status(400).json({ error: "File is required" });
         const uploadedFilePath = req.file.path;
         const fileName = req.file.originalname;
-        const userId = "(req as any).userId";
-        const chatbotId = "3f159c19-9ca1-4b18-a316-5fc8212843b4";
+        const userId = req.userId;
+        const chatbotId = req.chatbotId;
         try {
             if (content !== "") {
                 const userMessageid = yield (0, message_1.saveUserMessage)(chatbotId, userId, content);
@@ -30,9 +30,9 @@ function uploadAndResponse_Handler(req, res) {
                 const aiResponseText = yield (0, aiResponse_1.makeNewAIResponseForDocumentsWithMessage)(uploadedFilePath, content, chatbotId, userMessageid);
                 if (!aiResponseText)
                     return res.status(404).json({ error: "AI response not generated" });
-                const augmented = aiResponseText;
-                yield (0, scan_1.saveDocument)(chatbotId, userId, uploadedFilePath, fileName, augmented.original, augmented.augmented);
-                const aiMessageId = yield (0, message_1.saveAIMessage)(chatbotId, augmented.augmented);
+                const { original, promptString } = aiResponseText;
+                yield (0, scan_1.saveDocument)(chatbotId, userId, uploadedFilePath, fileName, original, promptString);
+                const aiMessageId = yield (0, message_1.saveAIMessage)(chatbotId, promptString);
                 const userMessage = yield (0, message_1.getMessageById)(userMessageid);
                 const AIMessage = yield (0, message_1.getMessageById)(aiMessageId);
                 return res.status(201).json({
@@ -44,9 +44,9 @@ function uploadAndResponse_Handler(req, res) {
                 const aiResponseText = yield (0, aiResponse_1.makeNewAIResponseForDocumentsWithoutMessage)(uploadedFilePath, '', chatbotId);
                 if (!aiResponseText)
                     return res.status(404).json({ error: "AI response not generated" });
-                const { original, augmented } = aiResponseText;
-                yield (0, scan_1.saveDocument)(chatbotId, userId, uploadedFilePath, fileName, original, augmented);
-                const aiMessageId = yield (0, message_1.saveAIMessage)(chatbotId, augmented);
+                const { original, promptString } = aiResponseText;
+                yield (0, scan_1.saveDocument)(chatbotId, userId, uploadedFilePath, fileName, original, promptString);
+                const aiMessageId = yield (0, message_1.saveAIMessage)(chatbotId, promptString);
                 const AIMessage = yield (0, message_1.getMessageById)(aiMessageId);
                 return res.status(201).json({
                     AIMessage,

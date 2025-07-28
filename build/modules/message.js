@@ -38,8 +38,6 @@ function saveUserAndAIMessage_Handler(req, res) {
         const { content } = req.body;
         const userId = req.userId;
         const chatbotId = req.chatbotId;
-        // const userId = '1';
-        // const chatbotId = 'ced4fb4f-b8c4-4830-a548-0c54ba2ffaee';
         console.log(chatbotId, userId, content);
         try {
             const userMessageid = yield (0, message_1.saveUserMessage)(chatbotId, userId, content);

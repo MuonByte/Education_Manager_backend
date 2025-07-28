@@ -15,8 +15,8 @@ export async function uploadAndResponse_Handler(req: Request, res: Response) {
 
 
 
-  const userId = "(req as any).userId";
-  const chatbotId = "3f159c19-9ca1-4b18-a316-5fc8212843b4";
+  const userId = (req as any).userId;
+  const chatbotId = (req as any).chatbotId;
 
   
 
@@ -32,11 +32,11 @@ export async function uploadAndResponse_Handler(req: Request, res: Response) {
         const aiResponseText = await makeNewAIResponseForDocumentsWithMessage(uploadedFilePath ,content, chatbotId ,userMessageid );
         if(!aiResponseText) return res.status(404).json({ error: "AI response not generated" });
         
-        const {original, augmented} = aiResponseText;
+        const {original, promptString} = aiResponseText;
         
-        await saveDocument(chatbotId, userId, uploadedFilePath,fileName ,original, augmented);
+        await saveDocument(chatbotId, userId, uploadedFilePath,fileName ,original, promptString);
         
-        const aiMessageId = await saveAIMessage(chatbotId, augmented);
+        const aiMessageId = await saveAIMessage(chatbotId, promptString);
 
         const userMessage = await getMessageById(userMessageid);
         const AIMessage = await getMessageById(aiMessageId);
@@ -52,12 +52,12 @@ export async function uploadAndResponse_Handler(req: Request, res: Response) {
       else{
         const aiResponseText = await makeNewAIResponseForDocumentsWithoutMessage(uploadedFilePath ,'', chatbotId );
         if(!aiResponseText) return res.status(404).json({ error: "AI response not generated" });
-        const {original, augmented} = aiResponseText;
+        const {original, promptString} = aiResponseText;
         
-        await saveDocument(chatbotId, userId, uploadedFilePath,fileName ,original, augmented);
+        await saveDocument(chatbotId, userId, uploadedFilePath,fileName ,original, promptString);
 
 
-        const aiMessageId = await saveAIMessage(chatbotId, augmented);
+        const aiMessageId = await saveAIMessage(chatbotId, promptString);
         const AIMessage = await getMessageById(aiMessageId);
         return res.status(201).json({
           

@@ -29,8 +29,7 @@ export async function saveUserAndAIMessage_Handler(req: Request, res: Response) 
   
   const userId = (req as any).userId;
   const chatbotId = (req as any).chatbotId;
-  // const userId = '1';
-  // const chatbotId = 'ced4fb4f-b8c4-4830-a548-0c54ba2ffaee';
+
 
   console.log(chatbotId, userId, content);
   
