@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { createNewRoom, getChatbotRoom, listChatbotRooms, renameChatbotRoom } from "../services/chatbot";
-import { showMessagesByRoom } from "../services/message";
+import { createNewRoom, getChatbotRoom, listChatbotRooms, renameChatbotRoom } from "../utils/chatbot";
+import { showMessagesByRoom } from "../utils/message";
 import jwt from 'jsonwebtoken';
 
 const secret:string|undefined =process.env.SECRET;

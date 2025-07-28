@@ -1,6 +1,6 @@
 import axios from "axios";
 import AIResponse from "../models/aiRespons";
-import { AIResponsRepo } from "../Repos/aiResponse";
+import { AIResponsRepo } from "../Repo/aiResponse";
 import crypto from "crypto";
 import fs from 'fs';
 import FormData from "form-data";

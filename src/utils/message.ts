@@ -1,5 +1,5 @@
 import { Message } from "../models/message";
-import { MessageRepo } from "../Repos/message";
+import { MessageRepo } from "../Repo/message";
 import crypto from 'crypto';
 
 

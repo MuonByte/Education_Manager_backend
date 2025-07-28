@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { getMessageById, saveAIMessage, saveUserMessage, showMessagesByRoom } from "../services/message";
-import {  makeNewAIResponseForMessages } from "../services/aiResponse";
+import { getMessageById, saveAIMessage, saveUserMessage, showMessagesByRoom } from "../utils/message";
+import {  makeNewAIResponseForMessages } from "../utils/aiResponse";
 import jwt from 'jsonwebtoken';
 import { time } from "console";
 

@@ -1,5 +1,5 @@
 import { ChatbotRoom } from "../models/chatbot";
-import { ChatbotRoomRepo } from "../Repos/chatbot";
+import { ChatbotRoomRepo } from "../Repo/chatbot";
 import crypto from 'crypto';
 
 export const getChatbotRoom= async(id:string)=>{

@@ -1,5 +1,5 @@
 import Documents from "../models/scan";
-import { DocumentRepo } from "../Repos/scan";
+import { DocumentRepo } from "../Repo/scan";
 
 
 export async function getDocumentsByTimestampForChatroom(id: string) {

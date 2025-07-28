@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
-import { getMessageById, saveAIMessage, saveUserMessage } from "../services/message";
-import {   makeNewAIResponseForDocumentsWithMessage, makeNewAIResponseForDocumentsWithoutMessage,} from "../services/aiResponse";
+import { getMessageById, saveAIMessage, saveUserMessage } from "../utils/message";
+import {   makeNewAIResponseForDocumentsWithMessage, makeNewAIResponseForDocumentsWithoutMessage,} from "../utils/aiResponse";
 import jwt from 'jsonwebtoken';
-import { saveDocument } from "../services/scan";
+import { saveDocument } from "../utils/scan";
 
 
 
