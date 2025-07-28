@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMessagesByTimestamp = getMessagesByTimestamp;
 exports.saveUserAndAIMessage_Handler = saveUserAndAIMessage_Handler;
-const message_1 = require("../services/message");
-const aiResponse_1 = require("../services/aiResponse");
+const message_1 = require("../utils/message");
+const aiResponse_1 = require("../utils/aiResponse");
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }

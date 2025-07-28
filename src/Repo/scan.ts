@@ -1,5 +1,5 @@
 import Documents from "../models/scan";
-import DatabaseConnection from "../config/databaseconfig";
+import DatabaseConnection from "../config/db";
 
 export class DocumentRepo{
 

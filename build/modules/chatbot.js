@@ -16,8 +16,8 @@ exports.createRoom_Handler = createRoom_Handler;
 exports.listChatbotRooms_Handler = listChatbotRooms_Handler;
 exports.renameChatbotRoom_Handler = renameChatbotRoom_Handler;
 exports.getChatbotRoomById_Handler = getChatbotRoomById_Handler;
-const chatbot_1 = require("../services/chatbot");
-const message_1 = require("../services/message");
+const chatbot_1 = require("../utils/chatbot");
+const message_1 = require("../utils/message");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const secret = process.env.SECRET;
 function createRoom_Handler(req, res) {

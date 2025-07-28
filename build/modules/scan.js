@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadAndResponse_Handler = uploadAndResponse_Handler;
-const message_1 = require("../services/message");
-const aiResponse_1 = require("../services/aiResponse");
-const scan_1 = require("../services/scan");
+const message_1 = require("../utils/message");
+const aiResponse_1 = require("../utils/aiResponse");
+const scan_1 = require("../utils/scan");
 function uploadAndResponse_Handler(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { content } = req.body;

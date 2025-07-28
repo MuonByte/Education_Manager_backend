@@ -1,7 +1,7 @@
-import { RowDataPacket } from "mysql2";
+
 import {ChatbotRoom} from "../models/chatbot";
 
-import DatabaseConnection from "../config/databaseconfig";
+import DatabaseConnection from "../config/db";
 
 
 export class ChatbotRoomRepo{

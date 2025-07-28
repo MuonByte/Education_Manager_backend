@@ -1,6 +1,6 @@
 import { Message } from "../models/message";
-import DatabaseConfig from "../config/databaseconfig";
-import DatabaseConnection from "../config/databaseconfig";
+
+import DatabaseConnection from "../config/db";
 
 export class MessageRepo{
   
