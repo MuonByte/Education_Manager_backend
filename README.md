@@ -82,39 +82,12 @@ After running `npm run build`, the compiled files will be inside the `build/` fo
 
 ```
 build/
-├── config/
-│ ├── app.js
-│ ├── db.js
-│ └── smtp.js
-├── middlewares/
-│ ├── auth.js
-│ ├── chatbot.js
-│ └── scans.js
-├── models/
-│ ├── aiRespons.js
-│ ├── auth.js
-│ ├── chatbot.js
-│ ├── message.js
-│ └── scan.js
-├── modules/
-│ ├── auth.js
-│ ├── chatbot.js
-│ ├── message.js
-│ └── scan.js
-├── Repo/
-│ ├── aiResponse.js
-│ ├── auth.js
-│ ├── chatbot.js
-│ ├── message.js
-│ └── scan.js
-├── routers/
-│ ├── auth.js
-│ ├── chatbot.js
-│ ├── message.js
-│ └── scan.js
-├── utils/
-│ ├── ...
-├── index.js
+├── config/           # Environment configs (SMTP, DB)
+├── controllers/      # Request handlers
+├── models/           # Database models
+├── routers/          # API routes
+├── utils/            # Helper functions (auth, sendEmail, etc.)
+└── index.js          # Server entry point
 ```
 
 > This folder is generated from your original source files (usually in `src/`).
