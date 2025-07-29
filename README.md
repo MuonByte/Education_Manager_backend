@@ -32,34 +32,40 @@ npm install
 In the root directory, create a file named `.env` and add the following:
 
 ```env
-PORT=5000
 
-DB_HOST=127.0.0.1
-DB_PORT=3306
+# CONFIG
+CONFIG_HOST=localhost
+CONFIG_PORT=3000
+CONFIG_SECRET=5032dbcb-fb79-4e2a-8b42-c05dca15e1f0
+#DB
+DB_NAME=emdb
 DB_USER=root
-DB_PASSWORD=yourpassword
-DB_NAME=education_db
+DB_PASSWORD=
+DB_HOST=127.0.0.1
 
-JWT_SECRET=your_jwt_secret
-
+#SMTP
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASS=your_email_password
+SMTP_USER=tatalatef64@gmail.com
+SMTP_PASS=rcya csxx miqd lpnr
+
+#jwt
+JWT_SECRET=tutorial22tutorial
+
+#AI
+AI_IP=192.168.1.12
+AI_port=2050
+
 ```
 
 > Replace the values with your actual credentials.
 
-4. **Build the Project**
+
+
+4. **Start the Server**
 
 ```bash
-npm run build
-```
-
-5. **Start the Server**
-
-```bash
-npm start
+npm run start
 ```
 
 Or, if you want to run the built version directly:
