@@ -19,21 +19,19 @@ This guide will help you run the backend locally, set up environment variables, 
 ```bash
 git clone https://github.com/MuonByte/Education_Manager_backend.git
 cd Education_Manager_backend
+```
 
+2. **Install Required Packages**
 
-Install Required Packages
-
-bash
-Copy
-Edit
+```bash
 npm install
-Create a .env File
+```
 
-In the root directory, create a file named .env and add the following:
+3. **Create a `.env` File**
 
-env
-Copy
-Edit
+In the root directory, create a file named `.env` and add the following:
+
+```env
 PORT=5000
 
 DB_HOST=127.0.0.1
@@ -48,32 +46,35 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_email_password
-Replace the values with your actual credentials.
+```
 
-Build the Project
+> Replace the values with your actual credentials.
 
-bash
-Copy
-Edit
+4. **Build the Project**
+
+```bash
 npm run build
-Start the Server
+```
 
-bash
-Copy
-Edit
+5. **Start the Server**
+
+```bash
 npm start
+```
+
 Or, if you want to run the built version directly:
 
-bash
-Copy
-Edit
+```bash
 node build/index.js
-📁 Project Structure (build folder)
-After running npm run build, the compiled files will be inside the build/ folder:
+```
 
-bash
-Copy
-Edit
+---
+
+### 📁 Project Structure (build folder)
+
+After running `npm run build`, the compiled files will be inside the `build/` folder:
+
+```
 build/
 ├── config/           # Environment configs (SMTP, DB)
 ├── controllers/      # Request handlers
@@ -81,4 +82,26 @@ build/
 ├── routers/          # API routes
 ├── utils/            # Helper functions (auth, sendEmail, etc.)
 └── index.js          # Server entry point
-This folder is generated from your original source files (usually in src/
+```
+
+> This folder is generated from your original source files (usually in `src/`).
+
+---
+
+### ❗Troubleshooting
+
+- **ECONNREFUSED** → Check if MySQL is running and `.env` credentials are correct.
+- **Module Not Found** → Run `npm install` again to ensure all dependencies are installed.
+- **SMTP/Email Errors** → Double-check SMTP credentials. If using Gmail, allow "less secure apps" or use App Passwords (for 2FA).
+
+---
+
+### 📬 Support
+
+If you face issues, feel free to open an issue on the GitHub repository.
+
+---
+
+### 🔗 Repository
+
+[https://github.com/MuonByte/Education_Manager_backend](https://github.com/MuonByte/Education_Manager_backend)
