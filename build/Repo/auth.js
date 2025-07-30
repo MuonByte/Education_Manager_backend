@@ -8,7 +8,7 @@ const db_1 = __importDefault(require("../config/db"));
 class UserRepo {
     static read(email) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`SELECT * FROM user WHERE email = ?`, [email], (err, res) => {
+            db_1.default.connection.query(`SELECT * FROM users WHERE email = ?`, [email], (err, res) => {
                 if (err) {
                     resolve(undefined);
                 }
@@ -20,7 +20,7 @@ class UserRepo {
     }
     static delete(email) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`Delete FROM user WHERE email = ?`, [email], (err, res) => {
+            db_1.default.connection.query(`Delete FROM users WHERE email = ?`, [email], (err, res) => {
                 if (err) {
                     resolve(false);
                 }
@@ -32,7 +32,7 @@ class UserRepo {
     }
     static login(email) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`SELECT password , more_secured FROM user WHERE email = ?`, [email], (err, res) => {
+            db_1.default.connection.query(`SELECT password , more_secured FROM users WHERE email = ?`, [email], (err, res) => {
                 if (err) {
                     resolve(undefined);
                 }
@@ -44,7 +44,7 @@ class UserRepo {
     }
     static secureLogin(email) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`UPDATE user SET more_secured = 1 WHERE email = ?`, [email], (err, res) => {
+            db_1.default.connection.query(`UPDATE users SET more_secured = 1 WHERE email = ?`, [email], (err, res) => {
                 if (err) {
                     resolve(false);
                 }
@@ -56,7 +56,7 @@ class UserRepo {
     }
     static UpdatePassword(email, password) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`UPDATE user SET password = ? WHERE email = ?`, [password, email], (err, res) => {
+            db_1.default.connection.query(`UPDATE users SET password = ? WHERE email = ?`, [password, email], (err, res) => {
                 if (err) {
                     resolve(false);
                 }
@@ -68,7 +68,7 @@ class UserRepo {
     }
     static updateProfile(updates) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`UPDATE user SET name = ? , image = ? WHERE email = ?`, updates, (err, res) => {
+            db_1.default.connection.query(`UPDATE users SET name = ? , image = ? WHERE email = ?`, updates, (err, res) => {
                 if (err) {
                     resolve(false);
                 }
@@ -80,7 +80,7 @@ class UserRepo {
     }
     static create(user, code) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.execute("INSERT INTO user (id, email, name, password, code,isVerified )\
+            db_1.default.connection.execute("INSERT INTO users (id, email, name, password, code,isVerified )\
                  VALUES ( ?, ?, ?, ?, ?, ? )", [
                 user.id,
                 user.email,
@@ -90,6 +90,7 @@ class UserRepo {
                 user.isVerified || false,
             ], (err, res) => {
                 if (err) {
+                    console.log("error: ", err);
                     resolve(undefined);
                 }
                 else {
@@ -100,7 +101,7 @@ class UserRepo {
     }
     static getVCode({ email }) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.query(`SELECT code FROM user WHERE email = ?`, [email], (err, res) => {
+            db_1.default.connection.query(`SELECT code FROM users WHERE email = ?`, [email], (err, res) => {
                 if (err)
                     resolve(false);
                 else
@@ -110,7 +111,7 @@ class UserRepo {
     }
     static verify(email) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.execute(`UPDATE user SET isverified = 1 WHERE email = ? `, [email], (err, res) => {
+            db_1.default.connection.execute(`UPDATE users SET isverified = 1 WHERE email = ? `, [email], (err, res) => {
                 if (err)
                     resolve(false);
                 else
@@ -120,7 +121,7 @@ class UserRepo {
     }
     static updateVCode(email, code) {
         return new Promise((resolve, reject) => {
-            db_1.default.connection.execute(`UPDATE user SET code = ? WHERE email = ? `, [code, email], (err, res) => {
+            db_1.default.connection.execute(`UPDATE users SET code = ? WHERE email = ? `, [code, email], (err, res) => {
                 if (err)
                     resolve(false);
                 else
