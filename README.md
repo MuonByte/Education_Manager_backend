@@ -104,7 +104,7 @@ build/
 ###Importent Note
 if u want to test backend only to test chatbot backend u can use my mock server by change the .env file such.
 
-```
+```env
 #AI
 AI_IP=localhost
 AI_port=3000
