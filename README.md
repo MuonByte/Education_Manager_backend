@@ -101,7 +101,7 @@ build/
 - **SMTP/Email Errors** → Double-check SMTP credentials. If using Gmail, allow "less secure apps" or use App Passwords (for 2FA).
 
 ---
-###Importent Note
+### 📜Importent Note
 if u want to test backend only to test chatbot backend u can use my mock server by change the .env file such.
 
 ```env
